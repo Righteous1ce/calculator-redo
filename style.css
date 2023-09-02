@@ -1,0 +1,92 @@
+*::before::after{
+    box-sizing: border-box;
+
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+.container{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+    
+}
+.display{
+    grid-column: 1 / -1;
+    height: 30%;
+    
+}
+.upper-display{
+    background-color: rgba(212, 212, 210, 0.5);
+    height: 80%;
+    
+}
+.lower-display{
+    background-color: rgba(212, 212, 210, 1);
+    
+    height: 100%;
+}
+
+
+.container > button{
+    margin: 20px;
+    cursor: pointer;
+    height: 80px;
+    
+}
+
+#operator-btn{
+    background-color: rgba(255, 149, 0, 1);
+    color: white;
+    border: none;
+    width: 80px;
+    border-radius: 50%;
+    font-size: 25px;
+}
+#operator-btn:hover{
+    background-color: rgba(255, 149, 0, 0.5);
+}
+.clear{
+    background-color: rgba(212, 212, 210, 1);
+    border: none;
+    font-size: 25px;
+    border-radius: 20px;
+}
+
+.clear:hover{
+    background-color: rgba(212, 212, 210, 0.5);
+}
+.number-btn{
+    background-color: rgba(80, 80, 80, 1);
+    color: white;
+    border: none;
+    width: 80px;
+    font-size: 25px;
+    border-radius: 50%;
+}
+
+.number-btn:hover{
+    background-color: rgba(80, 80, 80, 0.5);
+}
+
+.zero-btn{
+    background-color: rgba(80, 80, 80, 1);
+    color: white;
+    border: none;
+    font-size: 25px;
+    border-radius: 50%;
+}
+.zero-btn:hover{
+    background-color: rgba(80, 80, 80, 0.5);
+}
+#span-2{
+    grid-column: span 2;
+    border-radius: 20px;
+}
