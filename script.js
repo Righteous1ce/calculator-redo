@@ -26,12 +26,28 @@ operatorButton.forEach((button => {
     button.addEventListener('click', () =>{
         const operator = button.textContent;
         upperDisplay.innerHTML += operator;
+        lowerDisplay.innerHTML += operator;
     })
 }))
 
 
+allClearButton.forEach(button => {
+    button.addEventListener('click', () => {
+        upperDisplay.textContent = "";
+        lowerDisplay.textContent = "";
+        console.log("all clear");
+    })
+});
 
 
+deleteButton.forEach(button => {
+    button.addEventListener('click', () => {
+        let currentContent = lowerDisplay.textContent
+        currentContent = currentContent.slice(0, -1);
+        lowerDisplay.textContent = currentContent;
+        console.log("delete")
+    })
+})
 
 
 function add(firstOperand, secondOperand){
