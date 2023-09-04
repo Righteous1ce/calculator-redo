@@ -1,4 +1,3 @@
-
 const numberButtons = document.querySelectorAll('[data-number]');
 const operatorButton = document.querySelectorAll('[data-operator]');
 const deleteButton = document.querySelectorAll('[data-delete]');
@@ -16,15 +15,24 @@ const lowerDisplay = document.querySelector('[data-lower-display]');
 
 numberButtons.forEach((button => {
     button.addEventListener('click', () =>{
-        console.log(button);
+        const number = button.textContent;
+        upperDisplay.innerHTML += number;
+        lowerDisplay.innerHTML += number;
+       
     })
 }))
 
 operatorButton.forEach((button => {
     button.addEventListener('click', () =>{
-        console.log(button);
+        const operator = button.textContent;
+        upperDisplay.innerHTML += operator;
     })
 }))
+
+
+
+
+
 
 function add(firstOperand, secondOperand){
     return firstOperand + secondOperand;
@@ -38,3 +46,6 @@ function multiply(firstOperand, secondOperand){
 function divide(firstOperand, secondOperand){
     return firstOperand / secondOperand;
 }
+
+
+console.log(add(1, 2));
