@@ -9,9 +9,6 @@ const lowerDisplay = document.querySelector('[data-lower-display]');
 
 
 
-//console.log(operate(firstOperand, operator, secondOperand));
-
-
 
 numberButtons.forEach((button => {
     button.addEventListener('click', () =>{
@@ -27,6 +24,7 @@ operatorButton.forEach((button => {
         const operator = button.textContent;
         upperDisplay.innerHTML += operator;
         lowerDisplay.innerHTML += operator;
+        lowerDisplay.textContent = "";
     })
 }))
 
@@ -42,26 +40,46 @@ allClearButton.forEach(button => {
 
 deleteButton.forEach(button => {
     button.addEventListener('click', () => {
-        let currentContent = lowerDisplay.textContent
+        let currentContent = lowerDisplay.textContent;
+        let previousContent = upperDisplay.textContent;
+        previousContent = previousContent.slice(0, -1);
         currentContent = currentContent.slice(0, -1);
+        upperDisplay.textContent = previousContent;
         lowerDisplay.textContent = currentContent;
         console.log("delete")
     })
 })
 
 
+
+//equalsButton.addEventListener('click', oprate());
+
+
+
+
 function add(firstOperand, secondOperand){
-    return firstOperand + secondOperand;
+    lowerDisplay.textContent = firstOperand + secondOperand;
+    return lowerDisplay.textContent;
+
 }
-function subtarct(firstOperand, secondOperand){
-    return firstOperand - secondOperand;
+function subtract(firstOperand, secondOperand){
+    lowerDisplay.textContent = firstOperand - secondOperand;
+    return lowerDisplay.textContent;
 }
 function multiply(firstOperand, secondOperand){
-    return firstOperand * secondOperand;
+    lowerDisplay.textContent = firstOperand * secondOperand;
+    return lowerDisplay.textContent;
+
 }
 function divide(firstOperand, secondOperand){
-    return firstOperand / secondOperand;
+    lowerDisplay.textContent = firstOperand / secondOperand;
+
+    if(secondOperand === 0){
+        lowerDisplay.textContent = "Error";
+    } else{
+        return lowerDisplay.textContent;
+    }
 }
 
 
-console.log(add(1, 2));
+console.log(divide(1, 4));
