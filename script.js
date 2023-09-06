@@ -12,7 +12,7 @@ const lowerDisplay = document.querySelector('[data-lower-display]');
 
 numberButtons.forEach((button => {
     button.addEventListener('click', () =>{
-        const number = button.textContent;
+        number = button.textContent;
         upperDisplay.innerHTML += number;
         lowerDisplay.innerHTML += number;
        
@@ -34,7 +34,7 @@ allClearButton.forEach(button => {
     button.addEventListener('click', () => {
         upperDisplay.textContent = "";
         lowerDisplay.textContent = "";
-        console.log("all clear");
+    
     })
 });
 
@@ -47,69 +47,55 @@ deleteButton.forEach(button => {
         currentContent = currentContent.slice(0, -1);
         upperDisplay.textContent = previousContent;
         lowerDisplay.textContent = currentContent;
-        console.log("delete")
+        
     })
 })
 
-equalsButton.addEventListener('click', () => {
-    const firstOperand = parseFloat(upperDisplay.textContent);
-    console.log(firstOperand);
-    const secondOperand = parseFloat(lowerDisplay.textContent);
-    console.log(secondOperand);
-   
-   
 
+
+equalsButton.addEventListener('click', () => {
+    let first = parseFloat(upperDisplay.textContent);
+    console.log("upper: ", upperDisplay);
+    let second = parseFloat(lowerDisplay.textContent);
+    console.log(second);
+   
    
     let result; 
+    if(selectedOperator === '÷' && second === 0){
+        return lowerDisplay.textContent = "Error"
 
-    switch(selectedOperator) {
-        case "+":
-            result = add(firstOperand, secondOperand);
-            break;
-        case "-":
-            result = subtract(firstOperand, secondOperand);
-            break;
-        case "*":
-            result = multiply(firstOperand, secondOperand);
-            break;
-       case "÷":
-            result = divide(firstOperand, secondOperand);
-            break;
+    } else {
+
+        switch(selectedOperator) {
+            case "+":
+                result = first + second;
+                break;
+            case "-":
+                result = first - second;
+                break;
+            case "*":
+                result = first * second;
+                break;
+           case "÷":
+                result = first / second;
+                break;
+            default:
+                return;
+    
+        }
+
+
+
+
 
     }
+  
     console.log("final operator", selectedOperator);
     lowerDisplay.textContent = result;
     console.log(result);
 })
 
 
-//equalsButton.addEventListener('click', oprate());
 
 
 
-
-function add(firstOperand, secondOperand){
-    
-    return firstOperand + secondOperand;
-
-}
-function subtract(firstOperand, secondOperand){
-    return firstOperand - secondOperand;
-}
-
-function multiply(firstOperand, secondOperand){
-   return firstOperand * secondOperand;
-}
-function divide(firstOperand, secondOperand){
-   
-
-    if(secondOperand === 0){
-        lowerDisplay.textContnet = "Error";
-        
-    } else{
-        return firstOperand / secondOperand;
-    }
-}
-
-
-//console.log(divide(1, 4));
