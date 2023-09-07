@@ -8,32 +8,39 @@ const lowerDisplay = document.querySelector('[data-lower-display]');
 
 
 
+let calcString = '';
+let selectedOperator = '';
 
 
 numberButtons.forEach((button => {
     button.addEventListener('click', () =>{
-        number = button.textContent;
-        upperDisplay.innerHTML += number;
-        lowerDisplay.innerHTML += number;
+        
+        upperDisplay.innerHTML += button.textContent;
+        lowerDisplay.innerHTML += button.textContent;
+        calcString += button.textContent;
+       
        
     })
-}))
+}));
 
 operatorButton.forEach((button => {
     button.addEventListener('click', () =>{
         selectedOperator = button.textContent;
+        calcString += selectedOperator;
         upperDisplay.innerHTML += selectedOperator;
         lowerDisplay.innerHTML += selectedOperator;
-        lowerDisplay.textContent = "";
-        console.log(selectedOperator);
+        lowerDisplay.textContent = '';
+        
     })
-}))
+}));
 
 
 allClearButton.forEach(button => {
     button.addEventListener('click', () => {
-        upperDisplay.textContent = "";
-        lowerDisplay.textContent = "";
+        upperDisplay.textContent = '';
+        lowerDisplay.textContent = '';
+        calcString = '';
+       
     
     })
 });
@@ -45,24 +52,39 @@ deleteButton.forEach(button => {
         let previousContent = upperDisplay.textContent;
         previousContent = previousContent.slice(0, -1);
         currentContent = currentContent.slice(0, -1);
+        calcString = previousContent;
+       
         upperDisplay.textContent = previousContent;
         lowerDisplay.textContent = currentContent;
         
     })
-})
-
-
+});
 
 equalsButton.addEventListener('click', () => {
+    try {
+        const result = eval(calcString); // Use eval() for evaluation
+        lowerDisplay.textContent = result;
+        calcString = result.toString(); // Update currentInput with the result
+    } catch (error) {
+        lowerDisplay.textContent = 'Error';
+    }
+    upperDisplay.textContent = '';
+});
+
+
+/*
+equalsButton.addEventListener('click', () => {
+    
     let first = parseFloat(upperDisplay.textContent);
-    console.log("upper: ", upperDisplay);
     let second = parseFloat(lowerDisplay.textContent);
-    console.log(second);
-   
+    
+    if(isNaN(first) || isNaN(second)){
+        lowerDisplay.textContent = 'Error';
+    }
    
     let result; 
-    if(selectedOperator === '÷' && second === 0){
-        return lowerDisplay.textContent = "Error"
+    if(selectedOperator === '÷' && second === 0){ // can be in switch statement 
+        return lowerDisplay.textContent = 'Error';
 
     } else {
 
@@ -90,12 +112,12 @@ equalsButton.addEventListener('click', () => {
 
     }
   
-    console.log("final operator", selectedOperator);
+    
     lowerDisplay.textContent = result;
     console.log(result);
-})
+    
+});
 
 
 
-
-
+*/
