@@ -1,123 +1,95 @@
 const numberButtons = document.querySelectorAll('[data-number]');
-const operatorButton = document.querySelectorAll('[data-operator]');
-const deleteButton = document.querySelectorAll('[data-delete]');
-const allClearButton = document.querySelectorAll('[data-all-clear]');
+const operatorButtons = document.querySelectorAll('[data-operator]');
+const deleteButton = document.querySelector('[data-delete]');
+const allClearButton = document.querySelector('[data-all-clear]');
 const equalsButton = document.querySelector('[data-equals]');
 const upperDisplay = document.querySelector('[data-upper-display]');
 const lowerDisplay = document.querySelector('[data-lower-display]');
 
 
-
-let calcString = '';
 let selectedOperator = '';
+let firstOperand = '';
+let secondOperand = '';
 
+////////// NUMBER BTNS \\\\\\\\\\
 
-numberButtons.forEach((button => {
-    button.addEventListener('click', () =>{
-        
-        upperDisplay.innerHTML += button.textContent;
-        lowerDisplay.innerHTML += button.textContent;
-        calcString += button.textContent;
-       
-       
-    })
-}));
-
-operatorButton.forEach((button => {
-    button.addEventListener('click', () =>{
-        selectedOperator = button.textContent;
-        calcString += selectedOperator;
-        upperDisplay.innerHTML += selectedOperator;
-        lowerDisplay.innerHTML += selectedOperator;
-        lowerDisplay.textContent = '';
-        
-    })
-}));
-
-
-allClearButton.forEach(button => {
+numberButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        upperDisplay.textContent = '';
-        lowerDisplay.textContent = '';
-        calcString = '';
-       
-    
-    })
+        lowerDisplay.textContent += button.textContent;
+    });
 });
 
 
-deleteButton.forEach(button => {
+////////// OPERATE BTN \\\\\\\\\\
+
+operatorButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        let currentContent = lowerDisplay.textContent;
-        let previousContent = upperDisplay.textContent;
-        previousContent = previousContent.slice(0, -1);
-        currentContent = currentContent.slice(0, -1);
-        calcString = previousContent;
-       
-        upperDisplay.textContent = previousContent;
-        lowerDisplay.textContent = currentContent;
-        
-    })
-});
-
-equalsButton.addEventListener('click', () => {
-    try {
-        const result = eval(calcString); // Use eval() for evaluation
-        lowerDisplay.textContent = result;
-        calcString = result.toString(); // Update currentInput with the result
-    } catch (error) {
-        lowerDisplay.textContent = 'Error';
-    }
-    upperDisplay.textContent = '';
-});
-
-
-/*
-equalsButton.addEventListener('click', () => {
-    
-    let first = parseFloat(upperDisplay.textContent);
-    let second = parseFloat(lowerDisplay.textContent);
-    
-    if(isNaN(first) || isNaN(second)){
-        lowerDisplay.textContent = 'Error';
-    }
-   
-    let result; 
-    if(selectedOperator === '÷' && second === 0){ // can be in switch statement 
-        return lowerDisplay.textContent = 'Error';
-
-    } else {
-
-        switch(selectedOperator) {
-            case "+":
-                result = first + second;
-                break;
-            case "-":
-                result = first - second;
-                break;
-            case "*":
-                result = first * second;
-                break;
-           case "÷":
-                result = first / second;
-                break;
-            default:
-                return;
-    
+        if (selectedOperator !== '') {
+            operate();
         }
+        selectedOperator = button.textContent;
+        firstOperand = lowerDisplay.textContent;
+        upperDisplay.textContent = firstOperand + ' ' + selectedOperator;
+        lowerDisplay.textContent = '';
+    });
+});
 
+////////// DELETE BTN \\\\\\\\\\ 
 
+deleteButton.addEventListener('click', () => {
+    const currentContent = lowerDisplay.textContent;
+    const newContent = currentContent.slice(0, -1);
+    lowerDisplay.textContent = newContent;
+});
 
-
-
-    }
-  
+allClearButton.addEventListener('click', () => {
+    upperDisplay.textContent = '';
+    lowerDisplay.textContent = '';
     
-    lowerDisplay.textContent = result;
-    console.log(result);
-    
+    selectedOperator = '';
+    firstOperand = '';
+    secondOperand = '';
 });
 
 
+/////////// OPERATE FUNC \\\\\\\\\\
+function operate() {
+    if (selectedOperator && firstOperand && lowerDisplay.textContent) {
+        secondOperand = lowerDisplay.textContent;
+        const result = calculate(
+            parseFloat(firstOperand),
+            parseFloat(secondOperand),
+            selectedOperator
+        );
+        upperDisplay.textContent = '';
+        lowerDisplay.textContent = result.toString();
+        firstOperand = result.toString();
+        selectedOperator = '';
+    }
+}
 
-*/
+////////// CALCULATION FUNC \\\\\\\\\\
+
+function calculate(prev, curr, operator) {
+    switch (operator) {
+        case '+':
+            return prev + curr;
+        case '-':
+            return prev - curr;
+        case '*':
+            return prev * curr;
+        case '/':
+            if (curr === 0) {
+                return 'Error';
+            }
+            return prev / curr;
+        default:
+            return 'Error';
+    }
+}
+
+////////// EQUALS BTN \\\\\\\\\\ 
+
+equalsButton.addEventListener('click', () => {
+    operate();
+});
